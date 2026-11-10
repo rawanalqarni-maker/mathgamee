@@ -1,5 +1,4 @@
-# mathgamee
-//<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -210,7 +209,6 @@
 </div>
 
 <script>
-    // قائمة المنتجات الثابتة والمخزنة بالذاكرة بشكل سليم
     const inventory = [
         { name: 'حذاء رياضي', price: 120, emoji: '👟' },
         { name: 'سماعة رأس', price: 85, emoji: '🎧' },
@@ -229,90 +227,96 @@
     let targetChange = 0;
     let roundCount = 0;
 
-    // الدالة المسؤولة عن الانتقال وإخفاء شاشة الاسم فوراً
     function startGame() {
         const nameInput = document.getElementById('student-name-input').value.trim();
         if (nameInput === "") {
             alert("الرجاء إدخال اسم الطالبة أولاً لمباشرة التحدي! ✨");
-return;
-}
-studentName = nameInput;
-document.getElementById('lbl-student-name').innerText = studentName;
-// تبديل الشاشات بشكل مضمون وقاطع
-document.getElementById('start-screen').style.display = "none";
-document.getElementById('game-screen').style.display = "block";
-// تشغيل عداد الوقت
-timerCount = 0;
-document.getElementById('lbl-timer').innerText = timerCount;
-if(timerInterval) clearInterval(timerInterval);
-timerInterval = setInterval(function() {
-timerCount++;
-document.getElementById('lbl-timer').innerText = timerCount;
-}, 1000);
-// تشغيل الجولة الأولى مباشرة بعد التبديل
-newRound();
-}
-function newRound() {
-if (roundCount >= 3) {
-endGame();
-return;
-}
-roundCount++;
-// إعادة تصفير واجهة مربعات العمليات الحسابية
-document.getElementById('feedback-msg').innerText = '';
-document.getElementById('ans-total').value = '';
-document.getElementById('ans-change').value = '';
-document.getElementById('disp-total').innerText = '؟ ريال';
-document.getElementById('disp-change').innerText = '؟ ريال';
-document.getElementById('disp-paid').innerText = '؟ ريال';
-// اختيار صنفين مختلفين حسابياً بشكل رياضي ثابت
-let idx1 = Math.floor(Math.random() * inventory.length);
-let idx2 = Math.floor(Math.random() * inventory.length);
-while(idx1 === idx2) {
-idx2 = Math.floor(Math.random() * inventory.length);
-}
-let item1 = inventory[idx1];
-let item2 = inventory[idx2];
-// حساب النواتج المستهدفة
-targetTotal = item1.price + item2.price;
-targetChange = targetPaid - targetTotal;
-// طباعة نص المسألة البرمجية في الصندوق
-document.getElementById('quiz-question').innerHTML = السؤال (${roundCount} من 3): وضعتِ في السلة:<br><strong>(${item1.name} ${item1.emoji} و ${item2.name} ${item2.emoji})</strong><br> وسلمتِ البائع ورقة بقيمة <span style="color:#00b894;"><strong>${targetPaid} ريال</strong></span>.;
-}
-function verifyShopping() {
-const userTotal = parseInt(document.getElementById('ans-total').value);
-const userChange = parseInt(document.getElementById('ans-change').value);
-const feedback = document.getElementById('feedback-msg');
-if (isNaN(userTotal) || isNaN(userChange)) {
-feedback.className = "feedback wrong";
-feedback.innerText = "الرجاء كتابة المجموع والباقي أولاً! 📝";
-return;
-}
-if (userTotal === targetTotal && userChange === targetChange) {
-feedback.className = "feedback correct";
-feedback.innerText = "رائع جداً! إجابة صحيحة ومتقنة 🥳🎉";
-score += 10;
-document.getElementById('lbl-score').innerText = score;
-// كشف الإجابات الصحيحة في المربعات الملونة لتطابق فكرة مشروعك
-document.getElementById('disp-total').innerText = targetTotal + " ريال";
-document.getElementById('disp-change').innerText = targetChange + " ريال";
-document.getElementById('disp-paid').innerText = targetPaid + " ريال";
-// الانتقال التلقائي للجولة التالية بعد ثانيتين
-setTimeout(newRound, 2000);
-} else {
-feedback.className = "feedback wrong";
-feedback.innerText = "الحساب غير صحيح، ركّزي وأعيدي الطرح والجمع! ❌";
-}
-}
-function endGame() {
-if(timerInterval) clearInterval(timerInterval);
-// إخفاء اللعبة وإظهار لوحة الشرف الختامية بالطاقة الكاملة باسم الطالبة والمعلمة
-document.getElementById('game-screen').style.display = "none";
-document.getElementById('end-screen').style.display = "block";
-document.getElementById('final-student-name').innerText = studentName;
-document.getElementById('final-score').innerText = score;
-document.getElementById('final-time').innerText = timerCount;
-}
+            return;
+        }
+        studentName = nameInput;
+        document.getElementById('lbl-student-name').innerText = studentName;
+
+        document.getElementById('start-screen').style.display = "none";
+        document.getElementById('game-screen').style.display = "block";
+
+        timerCount = 0;
+        document.getElementById('lbl-timer').innerText = timerCount;
+
+        if(timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(function() {
+            timerCount++;
+            document.getElementById('lbl-timer').innerText = timerCount;
+        }, 1000);
+
+        newRound();
+    }
+
+    function newRound() {
+        if (roundCount >= 3) {
+            endGame();
+            return;
+        }
+        roundCount++;
+
+        document.getElementById('feedback-msg').innerText = '';
+        document.getElementById('ans-total').value = '';
+        document.getElementById('ans-change').value = '';
+        document.getElementById('disp-total').innerText = '؟ ريال';
+        document.getElementById('disp-change').innerText = '؟ ريال';
+        document.getElementById('disp-paid').innerText = '؟ ريال';
+
+        let idx1 = Math.floor(Math.random() * inventory.length);
+        let idx2 = Math.floor(Math.random() * inventory.length);
+        while(idx1 === idx2) {
+            idx2 = Math.floor(Math.random() * inventory.length);
+        }
+
+        let item1 = inventory[idx1];
+        let item2 = inventory[idx2];
+
+        targetTotal = item1.price + item2.price;
+        targetChange = targetPaid - targetTotal;
+
+        document.getElementById('quiz-question').innerHTML = `السؤال (${roundCount} من 3): وضعتِ في السلة:<br><strong>(${item1.name} ${item1.emoji} و ${item2.name} ${item2.emoji})</strong><br> وسلمتِ البائع ورقة بقيمة <span style="color:#00b894;"><strong>${targetPaid} ريال</strong></span>.`;
+    }
+
+    function verifyShopping() {
+        const userTotal = parseInt(document.getElementById('ans-total').value);
+        const userChange = parseInt(document.getElementById('ans-change').value);
+        const feedback = document.getElementById('feedback-msg');
+
+        if (isNaN(userTotal) || isNaN(userChange)) {
+            feedback.className = "feedback wrong";
+            feedback.innerText = "الرجاء كتابة المجموع والباقي أولاً! 📝";
+            return;
+        }
+
+        if (userTotal === targetTotal && userChange === targetChange) {
+            feedback.className = "feedback correct";
+            feedback.innerText = "رائع جداً! إجابة صحيحة ومتقنة 🥳🎉";
+            score += 10;
+            document.getElementById('lbl-score').innerText = score;
+
+            document.getElementById('disp-total').innerText = targetTotal + " ريال";
+            document.getElementById('disp-change').innerText = targetChange + " ريال";
+            document.getElementById('disp-paid').innerText = targetPaid + " ريال";
+
+            setTimeout(newRound, 2000);
+        } else {
+            feedback.className = "feedback wrong";
+            feedback.innerText = "الحساب غير صحيح، ركّزي وأعيدي الطرح والجمع! ❌";
+        }
+    }
+
+    function endGame() {
+        if(timerInterval) clearInterval(timerInterval);
+        document.getElementById('game-screen').style.display = "none";
+        document.getElementById('end-screen').style.display = "block";
+
+        document.getElementById('final-student-name').innerText = studentName;
+        document.getElementById('final-score').innerText = score;
+        document.getElementById('final-time').innerText = timerCount;
+    }
 </script>
 
 </body>
